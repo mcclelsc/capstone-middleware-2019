@@ -29,15 +29,7 @@ app.get('/', (req, res) => {
 res.sendStatus(200);
 });
 
-app.post('/', (req, res) => {
-	fs.writeFile("logs.txt", 'step one', function(err) {
-			if(err) {
-				return console.log(err);
-			}
-		});
-});
-
-app.post('/startConversation', (req, res) => {
+app.get('/startConversation', (req, res) => {
 	//Unpack payload's body into workable object
 	//var payloadJSON = JSON.parse(Object.keys(req.body)[0]);
 	assistant.createSession({
@@ -66,7 +58,7 @@ app.post('/startConversation', (req, res) => {
 	res.sendStatus(200);
 });
 
-app.post('/continueConversation', (req, res1) => {
+app.get('/continueConversation', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var chatText = "";
