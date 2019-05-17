@@ -29,7 +29,16 @@ app.get('/', (req, res) => {
 res.sendStatus(200);
 });
 
-app.get('/startConversation', (req, res) => {
+app.post('/', (req, res) => {
+	fs.writeFile("logs.txt", 'step one', function(err) {
+			if(err) {
+				return console.log(err);
+			}
+		});
+res.sendStatus(200);
+});
+
+app.post('/startConversation', (req, res) => {
 	//Unpack payload's body into workable object
 	//var payloadJSON = JSON.parse(Object.keys(req.body)[0]);
 	assistant.createSession({
@@ -58,7 +67,7 @@ app.get('/startConversation', (req, res) => {
 	res.sendStatus(200);
 });
 
-app.get('/continueConversation', (req, res1) => {
+app.post('/continueConversation', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var chatText = "";
@@ -86,7 +95,7 @@ app.get('/continueConversation', (req, res1) => {
 		
 });
 
-app.get('/queryDiscovery', (req, res1) => {
+app.post('/queryDiscovery', (req, res1) => {
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
