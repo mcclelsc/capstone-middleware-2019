@@ -36,7 +36,7 @@ app.get('/startConversation', (req, res) => {
 		assistant_id:'387f67bb-7fbb-4ca5-a175-88e4dbdc17e5'
 	}).then(res => {
 		sessionId = res.session_id;
-		/*
+		
 		assistant.message({
 		assistant_id: '387f67bb-7fbb-4ca5-a175-88e4dbdc17e5',
 		session_id: sessionId,
@@ -50,7 +50,7 @@ app.get('/startConversation', (req, res) => {
 		})
 		.catch(err => {
 			console.log(err);
-		});*/
+		});
 	})
 	.catch(err => {
 		console.log(err);
@@ -103,14 +103,8 @@ app.get('/queryDiscovery', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		  fs.writeFile("logs.json", JSON.stringify(queryResponse, null, 2), function(err) {
-			if(err) {
-				return console.log(err);
-			}
-		});
 		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
 		//console.log(JSON.stringify(queryResponse, null, 2));
-		console.log("Query Complete");
 		})
 	  .catch(err => {
 		console.log('error:', err);
