@@ -96,6 +96,10 @@ app.post('/continueConversation', (req, res1) => {
 });
 
 app.post('/queryDiscovery', (req, res1) => {
+	//Unpack payload's body into workable object
+	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	var chatText = "";
+	var chatObject = "";
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
@@ -105,7 +109,7 @@ app.post('/queryDiscovery', (req, res1) => {
 	var queryParams = {
 	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
-	  natural_language_query: 'April 3rd 2013',
+	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
 	  passages_count:3
 	};
