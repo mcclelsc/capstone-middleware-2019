@@ -21,21 +21,11 @@ var sessionId = "";
 app.use(JSONParser.urlencoded({extended:true}));
 
 app.get('/', (req, res) => {
-	fs.writeFile("logs.txt", 'step one', function(err) {
-			if(err) {
-				return console.log(err);
-			}
-		});
-res.sendStatus(200);
+	res.sendStatus(200);
 });
 
 app.post('/', (req, res) => {
-	fs.writeFile("logs.txt", 'step one', function(err) {
-			if(err) {
-				return console.log(err);
-			}
-		});
-res.sendStatus(200);
+	res.sendStatus(200);
 });
 
 app.post('/startConversation', (req, res1) => {
