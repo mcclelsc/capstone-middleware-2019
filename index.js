@@ -2,8 +2,6 @@ const express = require('express');
 const JSONParser = require('body-parser');
 const app = express();
 
-const port = process.env.port || 8080
-
 const fs = require('fs'); 
 
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
@@ -181,5 +179,5 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 	  
 });
 
-app.listen(port, () => console.log('App is Up'));
+app.listen(process.env.PORT || 8080, () => console.log('App is Up'));
 
