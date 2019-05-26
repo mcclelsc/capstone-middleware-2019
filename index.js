@@ -38,9 +38,9 @@ app.post('/', (req, res) => {
 res.sendStatus(200);
 });
 
-app.post('/startConversation', (req, res) => {
-	//Unpack payload's body into workable object
-	//var payloadJSON = JSON.parse(Object.keys(req.body)[0]);
+app.post('/startConversation', (req, res1) => {
+	var chatText = "";
+	var chatObject = "";
 	assistant.createSession({
 		assistant_id:'387f67bb-7fbb-4ca5-a175-88e4dbdc17e5'
 	}).then(res => {
@@ -51,11 +51,15 @@ app.post('/startConversation', (req, res) => {
 		session_id: sessionId,
 			input: {
 				'message_type': 'text',
-				'text': 'Hello'
+				'text': 'initiateConversation'
 			}
 		})
 		.then(res => {
-			//console.log(JSON.stringify(res, null, 2));
+			chatText = JSON.stringify(res, null, 2);
+			chatObject = JSON.parse(chatText);
+			//console.log(chatObject.output.generic[0].text);
+			chatText = chatObject.output.generic[0].text + "";
+			res1.status(200).send(chatText);
 		})
 		.catch(err => {
 			console.log(err);
@@ -64,7 +68,6 @@ app.post('/startConversation', (req, res) => {
 	.catch(err => {
 		console.log(err);
 	});
-	res.sendStatus(200);
 });
 
 app.post('/continueConversation', (req, res1) => {
@@ -84,7 +87,16 @@ app.post('/continueConversation', (req, res1) => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
 			//console.log(chatObject.output.generic[0].text);
-			chatText = chatObject.output.generic[0].text + "";
+			if (chatObject.hasOwnProperty('queryType')){
+				chatText = chatObect.context.queryType + ";uniqueDelimiter;" + chatObject.output.generic[0].text + "";
+				if (chatObject.hasOwnProperty('filename')){
+					chatText += ";uniqueDelimiter;" + chatObect.context.filename;
+				}
+			}
+			else{
+				chatText = chatObject.output.generic[0].text + "";
+			}
+			
 			res1.status(200).send(chatText);
 		})
 		.catch(err => {
@@ -95,11 +107,65 @@ app.post('/continueConversation', (req, res1) => {
 		
 });
 
-app.post('/queryDiscovery', (req, res1) => {
+app.post('/getDocumentId', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	var chatText = "";
-	var chatObject = "";
+	var discovery = new DiscoveryV1({
+	  version: '2019-02-28',
+	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
+	  url: 'https://gateway.watsonplatform.net/discovery/api'
+	});
+
+	var queryParams = {
+	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
+	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
+	  extracted_metadata.filename:insertModuleJSON.filename
+	};
+
+	discovery.query(queryParams)
+	  .then(queryResponse => {
+		  var responseModuleJSON = JSON.parse(queryResponse);
+		res1.status(200).send(responseModuleJSON.results[0].id, null, 2));
+		//console.log(JSON.stringify(queryResponse, null, 2));
+		})
+	  .catch(err => {
+		console.log('error:', err);
+	  });
+	  
+});
+
+app.post('/specificDiscoveryQuery', (req, res1) => {
+	//Unpack payload's body into workable object
+	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	var discovery = new DiscoveryV1({
+	  version: '2019-02-28',
+	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
+	  url: 'https://gateway.watsonplatform.net/discovery/api'
+	});
+
+	var queryParams = {
+	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
+	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
+	  filter: "id:"+insertModuleJSON.documentId,
+	  natural_language_query: insertModuleJSON.message,
+	  passages:true,
+	  passages_count:3
+	};
+
+	discovery.query(queryParams)
+	  .then(queryResponse => {
+		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
+		//console.log(JSON.stringify(queryResponse, null, 2));
+		})
+	  .catch(err => {
+		console.log('error:', err);
+	  });
+	  
+});
+
+app.post('/generalDiscoveryQuery', (req, res1) => {
+	//Unpack payload's body into workable object
+	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
@@ -111,7 +177,7 @@ app.post('/queryDiscovery', (req, res1) => {
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
-	  passages_count:3
+	  passages_count:100
 	};
 
 	discovery.query(queryParams)
