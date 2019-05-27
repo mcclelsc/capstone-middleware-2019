@@ -160,7 +160,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 				  }
 			  }
 		  }
-		  
+		  console.log(filteredPassages.passages);
 		res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
 		})
 	  .catch(err => {
