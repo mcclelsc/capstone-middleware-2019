@@ -45,7 +45,6 @@ app.post('/startConversation', (req, res1) => {
 		.then(res => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
-			//console.log(chatObject.output.generic[0].text);
 			chatText = chatObject.output.generic[0].text + "";
 			res1.status(200).send(chatText);
 		})
@@ -110,6 +109,7 @@ app.post('/getDocumentId', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
+		  console.log(queryResponse.results[0]);
 		  if (queryResponse.results[0].extracted_metadata.filename == insertModuleJSON.filename){
 			  response = "reportFound;uniqueDelimiter;" + queryResponse.results[0].id;
 		  }
@@ -148,8 +148,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	  .then(queryResponse => {
 		  if (queryResponse.passages.length > 3){
 			  for (i = 0; i < 3; i++){
-				  console.log(queryResponse.passages[i].document_id);
-				  console.log(insertModuleJSON.documentId);
 				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
 					  filteredPassages[filteredPassagesJSONName].push(queryResponse.passages[i]);
 				  }
@@ -162,7 +160,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 				  }
 			  }
 		  }
-		  console.log(filteredPassages.passages);
 		res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
 		})
 	  .catch(err => {
