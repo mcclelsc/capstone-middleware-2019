@@ -77,7 +77,7 @@ app.post('/continueConversation', (req, res1) => {
 
 			chatText = chatObject.output.generic[0].text + "";
 			
-			if (chatObject.output.entities.length > 0 && chatText = chatObject.output.generic[0].text.equals("specificDiscoveryQuery")){
+			if (chatObject.output.entities.length > 0 && chatText.equals("specificDiscoveryQuery")){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 			}
 
