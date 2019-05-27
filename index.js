@@ -27,6 +27,7 @@ app.post('/', (req, res) => {
 });
 
 app.post('/startConversation', (req, res1) => {
+	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var chatText = "";
 	var chatObject = "";
 	assistant.createSession({
@@ -39,7 +40,7 @@ app.post('/startConversation', (req, res1) => {
 		session_id: sessionId,
 			input: {
 				'message_type': 'text',
-				'text': 'initiateConversation'
+				'text': insertModuleJSON.message
 			}
 		})
 		.then(res => {
