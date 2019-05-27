@@ -95,6 +95,7 @@ app.post('/continueConversation', (req, res1) => {
 app.post('/getDocumentId', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	var reponseModuleJSON;
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
@@ -109,8 +110,8 @@ app.post('/getDocumentId', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
-		//console.log(JSON.stringify(queryResponse, null, 2));
+		//res1.status(200).send(JSON.stringify(queryResponse, null, 2));
+		res1.status(200).send(queryResponse.results[0].id);
 		})
 	  .catch(err => {
 		console.log('error:', err);
@@ -139,7 +140,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
-		//console.log(JSON.stringify(queryResponse, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
@@ -167,7 +167,6 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
-		//console.log(JSON.stringify(queryResponse, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
