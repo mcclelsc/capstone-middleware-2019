@@ -110,7 +110,8 @@ app.post('/getDocumentId', (req, res1) => {
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 		  console.log(queryResponse.results[0]);
-		  if (queryResponse.results[0].extracted_metadata.filename == insertModuleJSON.filename){
+		  //queryResponse.results[0].extracted_metadata.filename == insertModuleJSON.filename
+		  if (queryResponse.results[0]){
 			  response = "reportFound;uniqueDelimiter;" + queryResponse.results[0].id;
 		  }
 		  else{
