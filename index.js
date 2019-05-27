@@ -104,13 +104,12 @@ app.post('/getDocumentId', (req, res1) => {
 	var queryParams = {
 	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
-	  query:'extracted_metadata.filename:'+insertModuleJSON.filename
+	  query:insertModuleJSON.filename
 	};
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 		  var responseModuleJSON = JSON.parse(queryResponse);
-		  console.log(responseModuleJSON);
 		  console.log(responseModuleJSON.results);
 		res1.status(200).send(responseModuleJSON.results[0].id, null, 2);
 		//console.log(JSON.stringify(queryResponse, null, 2));
