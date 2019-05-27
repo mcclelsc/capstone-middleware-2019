@@ -75,6 +75,7 @@ app.post('/continueConversation', (req, res1) => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
 			console.log(chatObject);
+			console.log(chatObject.hasOwnProperty('context'))
 			if (chatObject.hasOwnProperty('queryType')){
 				console.log(chatObect.context.queryType);
 				chatText = chatObect.context.queryType + ";uniqueDelimiter;" + chatObject.output.generic[0].text + "";
