@@ -136,7 +136,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	var queryParams = {
 	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
-	  filter: "_id:"+insertModuleJSON.documentId,
+	  filter: "id::\""+insertModuleJSON.get("documentId").toString()"\"",
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
 	  passages_count:3
