@@ -76,7 +76,7 @@ app.post('/continueConversation', (req, res1) => {
 			chatObject = JSON.parse(chatText);
 
 			chatText = chatObject.output.generic[0].text + "";
-			console.log(chatObject);
+			console.log(chatObject.output.entities);
 			
 			if (chatObject.hasOwnProperty('filename')){
 				chatText += ";uniqueDelimiter;" + chatObect.context.filename;
