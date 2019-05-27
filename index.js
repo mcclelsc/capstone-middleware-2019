@@ -149,21 +149,17 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		  if (queryResponse.passages.length > 3){
-			  for (i = 0; i < 3; i++){
-				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
-					  filteredPassages.push(queryResponse.passages[i]);
-				  }
-			  }
-		  }
-		  else{
-			  for (i = 0; i < queryResponse.passages.length; i++){
-				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
-					  filteredPassages.push(queryResponse.passages[i]);
-				  }
-			  }
-		  }
-		res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
+			var tempCount = 0;
+				for (i = 0; i < queryResponse.passages.length; i++){
+					if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
+						filteredPassages.push(queryResponse.passages[i]);
+						tempCount++;
+						if (tempCount == 3){
+							break;
+						}
+					}
+				}
+			res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
