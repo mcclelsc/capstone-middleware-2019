@@ -114,7 +114,7 @@ app.post('/getDocumentId', (req, res1) => {
 		  if (queryResponse.results[0]){
 			  for (i = 0; i < queryResponse.results.length; i++){
 				  if (JSON.stringify(queryResponse.results[i].extracted_metadata.filename) == JSON.stringify(insertModuleJSON.filename)){
-					  response = "reportFound;uniqueDelimiter;" + queryResponse.results[0].id;
+					  response = "reportFound;uniqueDelimiter;" + queryResponse.results[i].id;
 				  }
 			  }
 		  }
