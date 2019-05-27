@@ -127,6 +127,9 @@ app.post('/getDocumentId', (req, res1) => {
 app.post('/specificDiscoveryQuery', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	var filteredPassages = {}
+	var filteredPassagesJSONName = "passages"
+	var filteredPassages[filteredPassagesJSONName] = [];
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
@@ -136,15 +139,29 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	var queryParams = {
 	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
-	  filter: "id::"+insertModuleJSON.documentId,
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
-	  passages_count:3
+	  passages_count:100
 	};
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
+		  if (queryResponse.passages.length > 3){
+			  for (i = 0; i < 3; i++){
+				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
+					  filteredPassages[filteredPassagesJSONName].push(queryResponse.passages[i]);
+				  }
+			  }
+		  }
+		  else{
+			  for (i = 0; i < queryResponse.passages.length; i++){
+				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
+					  filteredPassages[filteredPassagesJSONName].push(queryResponse.passages[i]);
+				  }
+			  }
+		  }
+		  
+		res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
