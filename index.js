@@ -110,7 +110,7 @@ app.post('/getDocumentId', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		  var itemOne = JSON.stringify(queryResponse.results[0].filename);
+		  var itemOne = JSON.stringify(queryResponse.results[0].extracted_metadata.filename);
 		  var itemTwo = JSON.stringify(insertModuleJSON.filename);
 		  if (itemOne.equals(itemTwo)){
 			  response = "reportFound" + queryResponse.results[0].id;
