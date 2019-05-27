@@ -129,7 +129,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var filteredPassages = {}
 	var filteredPassagesJSONName = "passages"
-	var filteredPassages[filteredPassagesJSONName] = [];
+	filteredPassages[filteredPassagesJSONName] = [];
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
