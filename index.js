@@ -110,6 +110,8 @@ app.post('/getDocumentId', (req, res1) => {
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 		  var responseModuleJSON = JSON.parse(queryResponse);
+		  console.log(responseModuleJSON);
+		  console.log(responseModuleJSON.results);
 		res1.status(200).send(responseModuleJSON.results[0].id, null, 2);
 		//console.log(JSON.stringify(queryResponse, null, 2));
 		})
