@@ -148,6 +148,8 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	  .then(queryResponse => {
 		  if (queryResponse.passages.length > 3){
 			  for (i = 0; i < 3; i++){
+				  console.log(queryResponse.passages[i].document_id);
+				  console.log(insertModuleJSON.documentId);
 				  if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
 					  filteredPassages[filteredPassagesJSONName].push(queryResponse.passages[i]);
 				  }
