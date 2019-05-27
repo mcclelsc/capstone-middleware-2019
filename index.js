@@ -111,11 +111,11 @@ app.post('/getDocumentId', (req, res1) => {
 	  .then(queryResponse => {
 		  console.log(queryResponse.results[0]);
 		  //queryResponse.results[0].extracted_metadata.filename == insertModuleJSON.filename
-		  if (queryResponse.results[0] === undefined){
-			  response = "reportNotFound;uniqueDelimiter;" + queryResponse.results[0].id
+		  if (queryResponse.results[0]){
+			  response = "reportFound;uniqueDelimiter;" + queryResponse.results[0].id;
 		  }
 		  else{
-			  response = "reportFound;uniqueDelimiter;" + queryResponse.results[0].id;
+			  response = "reportNotFound;uniqueDelimiter;";
 		  }
 			res1.status(200).send(response);
 		})
