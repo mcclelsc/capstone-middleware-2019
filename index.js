@@ -169,6 +169,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
 						stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
 						for (k = 0; k < stringToInspect.length; k++){
+							console.log(stringToInspect[k]);
 							if (stringToInspect[k].includes("</em>")){
 								highlightedTerms.push(stringToInspect[k].replace("</em>",""));
 							}
