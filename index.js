@@ -178,7 +178,9 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 					break;
 				}
 			}
+			console.log(highlightedTerms);
 			highlightedTerms = new Set(highlightedTerms);
+			console.log(highlightedTerms);
 			specificQueryPackage.push(filteredPassages);
 			specificQueryPackage.push(highlightedTerms);
 			res1.status(200).send(JSON.stringify(specificQueryPackage, null, 2));
