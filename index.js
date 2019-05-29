@@ -132,7 +132,11 @@ app.post('/getDocumentId', (req, res1) => {
 app.post('/specificDiscoveryQuery', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	var filteredPassages = []
+	var specificQueryPackage = [];
+	var highlightedTerms = [];
+	var filteredPassages = [];
+	var stringToInspect;
+	
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
 	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
@@ -159,7 +163,23 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 						}
 					}
 				}
-			res1.status(200).send(JSON.stringify(filteredPassages, null, 2));
+				for (i = 0; i < queryResponse.results.length; i++){
+					if (queryResponse.results[i].id == insertModuleJSON.documentId){
+						for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
+							stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
+							for (k = 0; k < stringToInspect.length; k++){
+								if (stringToInspect[k].includes("</em>")){
+									highlightedTerms.push(stringToInspect[k].replace("</em>",""));
+								}
+							}
+						}
+						break;
+					}
+				}
+				highlightedTerms = new Set(highlightedTerms);
+				specificQueryPackage.push(filteredPassages);
+				specificQueryPackage.push(highlightedTerms);
+			res1.status(200).send(JSON.stringify(specificQueryPackage, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
