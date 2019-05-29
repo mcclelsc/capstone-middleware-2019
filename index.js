@@ -167,22 +167,21 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 			for (i = 0; i < queryResponse.results.length; i++){
 				if (queryResponse.results[i].id == insertModuleJSON.documentId){
 					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
-						stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
+						stringToInspect = queryResponse.results[i].highlight.text[j].split("</em>");
 						for (k = 0; k < stringToInspect.length; k++){
-							console.log(stringToInspect[k]);
-							if (stringToInspect[k].includes("</em>")){
-								highlightedTerms.push(stringToInspect[k].replace("</em>",""));
+							if (stringToInspect[k].includes("<em>")){
+								highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>",""));
 							}
 						}
 					}
 					break;
 				}
 			}
-			console.log(highlightedTerms);
 			highlightedTerms = new Set(highlightedTerms);
-			console.log(highlightedTerms);
+			let arrayOfHighlightedTerms = Array.from(highlightedTerms);
+			console.log(arrayOfHighlightedTerms);
 			specificQueryPackage.push(filteredPassages);
-			specificQueryPackage.push(highlightedTerms);
+			specificQueryPackage.push(arrayOfHighlightedTerms);
 			res1.status(200).send(JSON.stringify(specificQueryPackage, null, 2));
 		})
 	  .catch(err => {
