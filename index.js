@@ -154,31 +154,32 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	discovery.query(queryParams)
 	  .then(queryResponse => {
 			var tempCount = 0;
-				for (i = 0; i < queryResponse.passages.length; i++){
-					if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
-						filteredPassages.push(queryResponse.passages[i]);
-						tempCount++;
-						if (tempCount == 3){
-							break;
-						}
-					}
-				}
-				for (i = 0; i < queryResponse.results.length; i++){
-					if (queryResponse.results[i].id == insertModuleJSON.documentId){
-						for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
-							stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
-							for (k = 0; k < stringToInspect.length; k++){
-								if (stringToInspect[k].includes("</em>")){
-									highlightedTerms.push(stringToInspect[k].replace("</em>",""));
-								}
-							}
-						}
+			for (i = 0; i < queryResponse.passages.length; i++){
+				if (queryResponse.passages[i].document_id == insertModuleJSON.documentId){
+					filteredPassages.push(queryResponse.passages[i]);
+					tempCount++;
+					if (tempCount == 3){
 						break;
 					}
 				}
-				highlightedTerms = new Set(highlightedTerms);
-				specificQueryPackage.push(filteredPassages);
-				specificQueryPackage.push(highlightedTerms);
+			}
+			for (i = 0; i < queryResponse.results.length; i++){
+				if (queryResponse.results[i].id == insertModuleJSON.documentId){
+					console.log(queryResponse.results[i]);
+					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
+						stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
+						for (k = 0; k < stringToInspect.length; k++){
+							if (stringToInspect[k].includes("</em>")){
+								highlightedTerms.push(stringToInspect[k].replace("</em>",""));
+							}
+						}
+					}
+					break;
+				}
+			}
+			highlightedTerms = new Set(highlightedTerms);
+			specificQueryPackage.push(filteredPassages);
+			specificQueryPackage.push(highlightedTerms);
 			res1.status(200).send(JSON.stringify(specificQueryPackage, null, 2));
 		})
 	  .catch(err => {
