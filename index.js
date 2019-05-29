@@ -148,7 +148,8 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
-	  passages_count:100
+	  passages_count:100,
+	  highlight:true
 	};
 
 	discovery.query(queryParams)
