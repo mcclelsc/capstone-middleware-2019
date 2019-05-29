@@ -166,7 +166,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 			}
 			for (i = 0; i < queryResponse.results.length; i++){
 				if (queryResponse.results[i].id == insertModuleJSON.documentId){
-					console.log(queryResponse.results[i]);
 					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
 						stringToInspect = queryResponse.results[i].highlight.text[j].split("<em>");
 						for (k = 0; k < stringToInspect.length; k++){
