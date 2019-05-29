@@ -170,7 +170,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 						stringToInspect = queryResponse.results[i].highlight.text[j].split("</em>");
 						for (k = 0; k < stringToInspect.length; k++){
 							if (stringToInspect[k].includes("<em>")){
-								highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>",""));
+								highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>","").replace("<em>", ""));
 							}
 						}
 					}
