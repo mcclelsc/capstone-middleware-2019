@@ -164,6 +164,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 					}
 				}
 			}
+			console.log(filteredPassages);
 			for (i = 0; i < queryResponse.results.length; i++){
 				if (queryResponse.results[i].id == insertModuleJSON.documentId){
 					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
@@ -179,7 +180,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 			}
 			highlightedTerms = new Set(highlightedTerms);
 			let arrayOfHighlightedTerms = Array.from(highlightedTerms);
-			console.log(arrayOfHighlightedTerms);
 			specificQueryPackage.push(filteredPassages);
 			specificQueryPackage.push(arrayOfHighlightedTerms);
 			res1.status(200).send(JSON.stringify(specificQueryPackage, null, 2));
