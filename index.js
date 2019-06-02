@@ -164,17 +164,29 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 					}
 				}
 			}
-			console.log(filteredPassages);
 			for (i = 0; i < queryResponse.results.length; i++){
 				if (queryResponse.results[i].id == insertModuleJSON.documentId){
-					for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
-						stringToInspect = queryResponse.results[i].highlight.text[j].split("</em>");
-						for (k = 0; k < stringToInspect.length; k++){
-							if (stringToInspect[k].includes("<em>")){
-								highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>","").replace("<em>", ""));
+					if (queryResponse.results[i].highlight.hasOwnProperty("text")){
+						for (j = 0; j < queryResponse.results[i].highlight.text.length; j++){
+							stringToInspect = queryResponse.results[i].highlight.text[j].split("</em>");
+							for (k = 0; k < stringToInspect.length; k++){
+								if (stringToInspect[k].includes("<em>")){
+									highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>","").replace("<em>", ""));
+								}
 							}
 						}
 					}
+					else if (queryResponse.results[i].highlight.hasOwnProperty("answer")){
+						for (j = 0; j < queryResponse.results[i].highlight.answer.length; j++){
+							stringToInspect = queryResponse.results[i].highlight.answer[j].split("</em>");
+							for (k = 0; k < stringToInspect.length; k++){
+								if (stringToInspect[k].includes("<em>")){
+									highlightedTerms.push(stringToInspect[k].substring(stringToInspect[k].indexOf("<em>"), stringToInspect[k].length).replace("</em>","").replace("<em>", ""));
+								}
+							}
+						}
+					}
+					
 					break;
 				}
 			}
