@@ -78,10 +78,11 @@ app.post('/continueConversation', (req, res1) => {
 			chatText = chatObject.output.generic[0].text;
 			
 			if (chatObject.output.hasOwnProperty("intents")){
+				console.log(chatObject.output)
 				//if (chatObject.output.intents[0].intent === "ConversationComplete"){
 					//chatText = "conversationComplete";
 				//}
-				else if (chatObject.output.entities.length > 0 && chatText === "Give me a moment to find that report."){
+				if (chatObject.output.entities.length > 0 && chatText === "Give me a moment to find that report."){
 					chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 				}
 			}
