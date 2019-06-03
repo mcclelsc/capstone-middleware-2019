@@ -75,10 +75,8 @@ app.post('/continueConversation', (req, res1) => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
 			
-			if (chatObject.output.hasOwnProperty("intents")){
-				if (chatObject.output.intents[0].intent === "ConversationComplete"){
-					chatText = "conversationComplete";
-				}
+			if (chatObject.output.hasOwnProperty("intents") && chatObject.output.intents[0].intent === "ConversationComplete"){
+				chatText = "conversationComplete";
 			}
 			else{
 				chatText = chatObject.output.generic[0].text;
