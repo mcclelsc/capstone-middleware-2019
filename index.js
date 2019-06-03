@@ -74,7 +74,7 @@ app.post('/continueConversation', (req, res1) => {
 		.then(res => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
-			
+			console.log(chatObject.output);
 			chatText = chatObject.output.generic[0].text;
 			
 			if (chatObject.output.entities.length > 0 && chatText === "Give me a moment to find that report."){
