@@ -74,8 +74,14 @@ app.post('/continueConversation', (req, res1) => {
 		.then(res => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
-			console.log(chatObject.output);
-			chatText = chatObject.output.generic[0].text;
+			
+			if (chatObject.output.generic.length > 0){
+				chatText = chatObject.output.generic[0].text;
+			}
+			else{
+				chatText = "I could not process your statement. Please try again."
+			}
+			
 			
 			if (chatObject.output.entities.length > 0 && chatText === "Give me a moment to find that report."){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
