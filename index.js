@@ -29,7 +29,7 @@ const discovery = new DiscoveryV1({
 
 var sessionId = "";
 
-app.use(JSONParser.urlencoded({extended:true}));
+app.use(JSONParser.urlencoded({limit: '50mb', extended:true}));
 
 app.get('/', (req, res) => {
 	res.sendStatus(200);
