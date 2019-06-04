@@ -1,5 +1,6 @@
 const express = require('express');
 const JSONParser = require('body-parser');
+const fs = require('fs');
 const app = express();
 
 const discoveryURL = "https://gateway.watsonplatform.net/discovery/api";
@@ -247,10 +248,13 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	
+	var fileStream = fs.createReadStream(req.body);
+	
 	var documentParams = {
 	  environment_id: discoveryEnvironmentID,
 	  collection_id: discoveryCollectionID,
-	  file: req.body
+	  file: fileStream
 	};
 
 	discovery.addDocument(documentParams)
