@@ -253,7 +253,7 @@ app.post('/uploadDocument', (req, res1) => {
 	  file: req.body
 	};
 
-	discovery.addDocument(queryParams)
+	discovery.addDocument(documentParams)
 	  .then(documentAccepted => {
 		res1.status(200).send(JSON.stringify(documentAccepted, null, 2));
 		})
