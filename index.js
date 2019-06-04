@@ -2,7 +2,14 @@ const express = require('express');
 const JSONParser = require('body-parser');
 const app = express();
 
-const fs = require('fs'); 
+const discoveryURL = "https://gateway.watsonplatform.net/discovery/api";
+const discoveryAPI = "VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX";
+const discoveryEnvironmentID = "a81bea55-c449-4499-8c7b-4cd3358ea94d";
+const discoveryCollectionID = "89949583-2061-48d0-ade2-289ed65a499a";
+
+const assistantURL = "https://gateway.watsonplatform.net/assistant/api";
+const assistantAPI = "jP5yGzV5NNzsfS7NG5xmDg96b9Dj6_t0kug5Kg6nEQUM";
+const assistantID = "387f67bb-7fbb-4ca5-a175-88e4dbdc17e5";
 
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
@@ -10,8 +17,8 @@ const AssistantV2 = require('ibm-watson/assistant/v2');
 
 const assistant = new AssistantV2({
   version: '2019-02-28',
-  iam_apikey: 'jP5yGzV5NNzsfS7NG5xmDg96b9Dj6_t0kug5Kg6nEQUM',
-  url: 'https://gateway.watsonplatform.net/assistant/api'
+  iam_apikey: assistantAPI,
+  url: assistantURL
 });
 
 var sessionId = "";
@@ -31,12 +38,12 @@ app.post('/startConversation', (req, res1) => {
 	var chatText = "";
 	var chatObject = "";
 	assistant.createSession({
-		assistant_id:'387f67bb-7fbb-4ca5-a175-88e4dbdc17e5'
+		assistant_id: assistantID
 	}).then(res => {
 		sessionId = res.session_id;
 		
 		assistant.message({
-		assistant_id: '387f67bb-7fbb-4ca5-a175-88e4dbdc17e5',
+		assistant_id: assistantID,
 		session_id: sessionId,
 			input: {
 				'message_type': 'text',
@@ -64,7 +71,7 @@ app.post('/continueConversation', (req, res1) => {
 	var chatText = "";
 	var chatObject = "";
 	assistant.message({
-		assistant_id: '387f67bb-7fbb-4ca5-a175-88e4dbdc17e5',
+		assistant_id: assistantID,
 		session_id: sessionId,
 			input: {
 				'message_type': 'text',
@@ -106,13 +113,13 @@ app.post('/getDocumentId', (req, res1) => {
 	var reponse;
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
-	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
-	  url: 'https://gateway.watsonplatform.net/discovery/api'
+	  iam_apikey: discoveryAPI,
+	  url: discoveryURL
 	});
 
 	var queryParams = {
-	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
-	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
+	  environment_id: discoveryEnvironmentID,
+	  collection_id: discoveryCollectionID,
 	  natural_language_query: insertModuleJSON.filename
 	};
 
@@ -147,13 +154,13 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
-	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
-	  url: 'https://gateway.watsonplatform.net/discovery/api'
+	  iam_apikey: discoveryAPI,
+	  url: discoveryURL
 	});
 
 	var queryParams = {
-	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
-	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
+	  environment_id: discoveryEnvironmentID,
+	  collection_id: discoveryCollectionID,
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
 	  passages_count:100,
@@ -225,13 +232,13 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var discovery = new DiscoveryV1({
 	  version: '2019-02-28',
-	  iam_apikey: 'VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX',
-	  url: 'https://gateway.watsonplatform.net/discovery/api'
+	  iam_apikey: discoveryAPI,
+	  url: discoveryURL
 	});
 
 	var queryParams = {
-	  environment_id: 'a81bea55-c449-4499-8c7b-4cd3358ea94d',
-	  collection_id: '89949583-2061-48d0-ade2-289ed65a499a',
+	  environment_id: discoveryEnvironmentID,
+	  collection_id: discoveryCollectionID,
 	  natural_language_query: insertModuleJSON.message,
 	  passages:true,
 	  passages_count:100
