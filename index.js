@@ -21,6 +21,12 @@ const assistant = new AssistantV2({
   url: assistantURL
 });
 
+const discovery = new DiscoveryV1({
+	version: '2019-02-28',
+	iam_apikey: discoveryAPI,
+	url: discoveryURL
+});
+
 var sessionId = "";
 
 app.use(JSONParser.urlencoded({extended:true}));
@@ -111,11 +117,6 @@ app.post('/getDocumentId', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var reponse;
-	var discovery = new DiscoveryV1({
-	  version: '2019-02-28',
-	  iam_apikey: discoveryAPI,
-	  url: discoveryURL
-	});
 
 	var queryParams = {
 	  environment_id: discoveryEnvironmentID,
@@ -151,12 +152,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 	var highlightedTerms = [];
 	var filteredPassages = [];
 	var stringToInspect;
-	
-	var discovery = new DiscoveryV1({
-	  version: '2019-02-28',
-	  iam_apikey: discoveryAPI,
-	  url: discoveryURL
-	});
 
 	var queryParams = {
 	  environment_id: discoveryEnvironmentID,
@@ -230,11 +225,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 app.post('/generalDiscoveryQuery', (req, res1) => {
 	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	var discovery = new DiscoveryV1({
-	  version: '2019-02-28',
-	  iam_apikey: discoveryAPI,
-	  url: discoveryURL
-	});
 
 	var queryParams = {
 	  environment_id: discoveryEnvironmentID,
@@ -251,6 +241,28 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 	  .catch(err => {
 		console.log('error:', err);
 	  });
+	  
+});
+
+app.post('/uploadDocument', (req, res1) => {
+	//Unpack payload's body into workable object
+	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	console.log(Object.keys(req.body)[0]);
+	/*var queryParams = {
+	  environment_id: discoveryEnvironmentID,
+	  collection_id: discoveryCollectionID,
+	  natural_language_query: insertModuleJSON.message,
+	  passages:true,
+	  passages_count:100
+	};
+
+	discovery.query(queryParams)
+	  .then(queryResponse => {
+		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
+		})
+	  .catch(err => {
+		console.log('error:', err);
+	  });*/
 	  
 });
 
