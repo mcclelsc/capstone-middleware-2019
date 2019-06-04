@@ -247,11 +247,10 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	console.log(req.body);
-	/*var documentParams = {
+	var documentParams = {
 	  environment_id: discoveryEnvironmentID,
 	  collection_id: discoveryCollectionID,
-	  file: 
+	  file: req.body
 	};
 
 	discovery.addDocument(queryParams)
@@ -260,7 +259,7 @@ app.post('/uploadDocument', (req, res1) => {
 		})
 	  .catch(err => {
 		console.log('error:', err);
-	  });*/
+	  });
 	  
 });
 
