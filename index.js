@@ -247,18 +247,16 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	console.log(Object.keys(req.body)[0]);
-	/*var queryParams = {
+	console.log(req.body);
+	/*var documentParams = {
 	  environment_id: discoveryEnvironmentID,
 	  collection_id: discoveryCollectionID,
-	  natural_language_query: insertModuleJSON.message,
-	  passages:true,
-	  passages_count:100
+	  file: 
 	};
 
-	discovery.query(queryParams)
-	  .then(queryResponse => {
-		res1.status(200).send(JSON.stringify(queryResponse, null, 2));
+	discovery.addDocument(queryParams)
+	  .then(documentAccepted => {
+		res1.status(200).send(JSON.stringify(documentAccepted, null, 2));
 		})
 	  .catch(err => {
 		console.log('error:', err);
