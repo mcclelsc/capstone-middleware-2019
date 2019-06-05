@@ -249,29 +249,21 @@ app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	
-	var fileStream = [];
+	console.log(req.files);
 	
-	req.on('data', function(section){
-		fileStream.push(section);
-	});
-	
-	req.on('end', function(){
-		fileStream = Buffer.concat(fileStream);
-		
-		var documentParams = {
-		  environment_id: discoveryEnvironmentID,
-		  collection_id: discoveryCollectionID,
-		  file: fileStream
-		};
+	/*var documentParams = {
+	  environment_id: discoveryEnvironmentID,
+	  collection_id: discoveryCollectionID,
+	  file: req.body
+	};
 
-		discovery.addDocument(documentParams)
-		  .then(documentAccepted => {
-			res1.status(200).send(JSON.stringify(documentAccepted, null, 2));
-			})
-		  .catch(err => {
-			console.log('error:', err);
-		  });
-	});
+	discovery.addDocument(documentParams)
+	  .then(documentAccepted => {
+		res1.status(200).send(JSON.stringify(documentAccepted, null, 2));
+		})
+	  .catch(err => {
+		console.log('error:', err);
+	  });*/
 	  
 });
 
