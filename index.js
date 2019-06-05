@@ -249,7 +249,14 @@ app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	
-	console.log(req.files);
+	//console.log(req.files);
+	
+	var chunks = [];
+	
+	res1.on('data', chunk => chunks.push(Buffer.from(chunk))).on('end', () = >{
+		var buffer = Buffer.concat(chunks);
+		console.log(buffer.toString('base64'));
+	});
 	
 	/*var documentParams = {
 	  environment_id: discoveryEnvironmentID,
