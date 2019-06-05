@@ -1,6 +1,7 @@
 const express = require('express');
 const JSONParser = require('body-parser');
-const fs = require('fs');
+const mysql = require('mysql');
+//const fs = require('fs');
 const app = express();
 
 const discoveryURL = "https://gateway.watsonplatform.net/discovery/api";
@@ -33,6 +34,9 @@ var sessionId = "";
 app.use(JSONParser.urlencoded({limit: '50mb', extended:true}));
 
 app.get('/', (req, res) => {
+	var connection = mysql.createConnection("mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh");
+	connection.connect();
+	connection.end();
 	res.sendStatus(200);
 });
 
