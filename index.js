@@ -245,11 +245,7 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 	  
 });
 
-app.post('/uploadDocument', (req, res1) => {
-	//Unpack payload's body into workable object
-	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
-	
-	//console.log(req.body);
+/*app.post('/uploadDocument', (req, res1) => {
 	
 	fs.writeFile('temp.pdf', req.body, 'binary', function(err) {
 		if(err)
@@ -258,7 +254,7 @@ app.post('/uploadDocument', (req, res1) => {
 		  console.log("The file was saved!");
 	  });
 	
-	/*var documentParams = {
+	var documentParams = {
 	  environment_id: discoveryEnvironmentID,
 	  collection_id: discoveryCollectionID,
 	  file: req.body
@@ -270,9 +266,9 @@ app.post('/uploadDocument', (req, res1) => {
 		})
 	  .catch(err => {
 		console.log('error:', err);
-	  });*/
+	  });
 	  
-});
+});*/
 
 app.listen(process.env.PORT || 8080, () => console.log('App is Up'));
 
