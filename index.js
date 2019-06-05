@@ -255,6 +255,7 @@ app.post('/uploadDocument', (req, res1) => {
 	
 	res1.on('data', chunk => chunks.push(Buffer.from(chunk))).on('end', () =>{
 		var buffer = Buffer.concat(chunks);
+		res1.status(200);
 		console.log(buffer.toString('base64'));
 	});
 	
