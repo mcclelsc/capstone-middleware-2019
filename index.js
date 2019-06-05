@@ -99,11 +99,11 @@ app.post('/continueConversation', (req, res1) => {
 			if (chatObject.output.entities.length > 0 && chatObject.output.intents.length > 0 && chatObject.output.intents[0].intent === "RecognizeReport"){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 			}
-			else if (chatObject.output.hasOwnProperty("chatState")){
-				if (chatObject.output.chatState === "send"){
+			else if (chatObject.output.hasOwnProperty("user_defined")){
+				if (chatObject.output.user_defined.chatState === "send"){
 					chatText = "sendChatLog";
 				}
-				else if (chatObject.output.chatState === "doNotSend"){
+				else if (chatObject.output.user_defined.chatState === "doNotSend"){
 					chatText = "doNotSendChatLog";
 				}
 			}
