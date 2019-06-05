@@ -249,7 +249,14 @@ app.post('/uploadDocument', (req, res1) => {
 	//Unpack payload's body into workable object
 	//var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	
-	console.log(req.body);
+	//console.log(req.body);
+	
+	fs.writeFile('temp.pdf', req.body, 'binary', function(err) {
+		if(err)
+		  console.log(err);
+		else
+		  console.log("The file was saved!");
+	  });
 	
 	/*var documentParams = {
 	  environment_id: discoveryEnvironmentID,
