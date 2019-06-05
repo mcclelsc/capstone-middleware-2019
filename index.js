@@ -97,11 +97,14 @@ app.post('/continueConversation', (req, res1) => {
 			}
 			
 			
-			if (chatObject.output.entities.length > 0 && chatText === "Give me a moment to find that report."){
+			if (chatObject.output.entities.length > 0 && chatObject.output.intents.length > 0 && chatObject.output.intents[0].intent === "RecognizeReport"){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 			}
-			else if (chatObject.output.intents.length > 0 && chatObject.output.intents[0].intent === "ConversationComplete"){
-				chatText = "conversationComplete";
+			else if (chatObject.context.length > 0 && chatObject.context.chatLogState === "send"){
+				chatText = "sendChatLog";
+			}
+			else if (chatObject.context.length > 0 && chatObject.context.chatLogState === "doNotSend"){
+				chatText = "doNotSendChatLog";
 			}
 			
 			res1.status(200).send(chatText);
