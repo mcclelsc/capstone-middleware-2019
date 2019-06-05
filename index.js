@@ -95,7 +95,6 @@ app.post('/continueConversation', (req, res1) => {
 			else{
 				chatText = "I could not process your statement. Please try again."
 			}
-			console.log(chatObject.output);
 			if (chatObject.output.entities.length > 0 && chatObject.output.intents.length > 0 && chatObject.output.intents[0].intent === "RecognizeReport"){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 			}
