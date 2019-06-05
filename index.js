@@ -95,16 +95,15 @@ app.post('/continueConversation', (req, res1) => {
 			else{
 				chatText = "I could not process your statement. Please try again."
 			}
-			
-			console.log(chatObject.generic);
+			console.log(chatObject.output);
 			if (chatObject.output.entities.length > 0 && chatObject.output.intents.length > 0 && chatObject.output.intents[0].intent === "RecognizeReport"){
 				chatText += ";uniqueDelimiter;" + chatObject.output.entities[0].value;
 			}
-			else if (chatObject.hasOwnProperty("context")){
-				if (chatObject.context.chatLogState === "send"){
+			else if (chatObject.output.hasOwnProperty("chatState")){
+				if (chatObject.output.chatState === "send"){
 					chatText = "sendChatLog";
 				}
-				else if (chatObject.context.chatLogState === "doNotSend"){
+				else if (chatObject.output.chatState === "doNotSend"){
 					chatText = "doNotSendChatLog";
 				}
 			}
