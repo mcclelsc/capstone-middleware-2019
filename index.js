@@ -4,6 +4,8 @@ const mysql = require('mysql');
 //const fs = require('fs');
 const app = express();
 
+const mysqlConnectionString = "mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh";
+
 const discoveryURL = "https://gateway.watsonplatform.net/discovery/api";
 const discoveryAPI = "VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX";
 const discoveryEnvironmentID = "a81bea55-c449-4499-8c7b-4cd3358ea94d";
@@ -43,7 +45,14 @@ app.get('/', (req, res) => {
 		console.log("Database Created");
 	});*/
 	
-	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), occurencetime datetime default current_timestamp on update current_timestamp)";
+	connection.query("drop table history", function(){
+		if (err){
+			throw err;
+		}
+		console.log("table deleted");
+	});
+	
+	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), reportname varchar(255), occurencetime datetime default current_timestamp on update current_timestamp)";
 	
 	connection.query(createString, function(err, result){
 		if (err){
@@ -266,6 +275,23 @@ app.post('/generalDiscoveryQuery', (req, res1) => {
 		console.log('error:', err);
 	  });
 	  
+});
+
+app.post('/insertQuestion', (req, res1) => {
+	var connection = mysql.createConnection(mysqlConnectionString);
+	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
+	
+	var insertString = "insert into history (question, answer, intent) values ('" + insertModuleJSON.question + "', '" + insertModuleJSON.answer + "', '" + insertModuleJSON.intent + "'," + insertModuleJSON.reportname + ")";
+
+	connection.connect();
+	connection.query(insertString, function(err, result){
+		if (err){
+			throw err;
+		}
+	});
+	connection.end();
+	
+	res1.status(200);
 });
 
 /*app.post('/uploadDocument', (req, res1) => {
