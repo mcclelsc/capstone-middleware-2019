@@ -36,7 +36,7 @@ var sessionId = "";
 app.use(JSONParser.urlencoded({limit: '50mb', extended:true}));
 
 app.get('/', (req, res) => {
-	var connection = mysql.createConnection("mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh");
+	/*var connection = mysql.createConnection("mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh");
 	connection.connect();
 	//connection.query("CREATE DATABASE questionhistory", function(err, result){
 	//	if (err){
@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
 		console.log("Table created");
 	});
 	
-	connection.end();
+	connection.end();*/
 	res.sendStatus(200);
 });
 
@@ -281,7 +281,7 @@ app.post('/insertQuestion', (req, res1) => {
 	var connection = mysql.createConnection(mysqlConnectionString);
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	
-	var insertString = "insert into history (question, answer, intent) values ('" + insertModuleJSON.question + "', '" + insertModuleJSON.answer + "', '" + insertModuleJSON.reportname + "')";
+	var insertString = "insert into history (question, answer, reportname) values ('" + insertModuleJSON.question + "', '" + insertModuleJSON.answer + "', '" + insertModuleJSON.reportname + "')";
 
 	connection.connect();
 	connection.query(insertString, function(err, result){
@@ -289,6 +289,14 @@ app.post('/insertQuestion', (req, res1) => {
 			throw err;
 		}
 	});
+	
+	connection.query("select * from history", function(){
+		if (err){
+			throw err;
+		}
+		console.log(result);
+	});
+	
 	connection.end();
 	
 	res1.status(200);
