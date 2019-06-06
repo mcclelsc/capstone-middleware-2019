@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 			throw err;
 		}
 		console.log("Database Created");
-	}
+	});
 	
 	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), occurencetime datetime current_timestamp on update current_timestamp)";
 	
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 			throw err;
 		}
 		console.log("Table created");
-	}
+	});
 	
 	connection.end();
 	res.sendStatus(200);
