@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 		console.log("Database Created");
 	});*/
 	
-	connection.query("drop table history", function(){
+	connection.query("drop table history", function(err, result){
 		if (err){
 			throw err;
 		}
