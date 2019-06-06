@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 		console.log("Database Created");
 	});*/
 	
-	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), occurencetime datetime current_timestamp on update current_timestamp)";
+	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), occurencetime datetime default current_timestamp on update current_timestamp)";
 	
 	connection.query(createString, function(err, result){
 		if (err){
