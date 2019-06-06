@@ -36,6 +36,22 @@ app.use(JSONParser.urlencoded({limit: '50mb', extended:true}));
 app.get('/', (req, res) => {
 	var connection = mysql.createConnection("mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh");
 	connection.connect();
+	connection.query("CREATE DATABASE questionhistory", function(err, result){
+		if (err){
+			throw err;
+		}
+		console.log("Database Created");
+	}
+	
+	var createString = "create table history(id int primary key auto_increment, question varchar(255), answer text, intent varchar(255), occurencetime datetime current_timestamp on update current_timestamp)";
+	
+	connection.query(createString, function(err, result){
+		if (err){
+			throw err;
+		}
+		console.log("Table created");
+	}
+	
 	connection.end();
 	res.sendStatus(200);
 });
