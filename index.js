@@ -290,7 +290,7 @@ app.post('/insertQuestion', (req, res1) => {
 		}
 	});
 	
-	connection.query("select * from history", function(){
+	connection.query("select * from history", function(err, result){
 		if (err){
 			throw err;
 		}
