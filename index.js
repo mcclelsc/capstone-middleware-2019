@@ -299,7 +299,7 @@ app.post('/insertQuestion', (req, res1) => {
 	
 	connection.end();
 	
-	res1.status(200);
+	res1.status(200).send();
 });
 
 /*app.post('/uploadDocument', (req, res1) => {
