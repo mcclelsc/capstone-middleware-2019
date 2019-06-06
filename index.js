@@ -1,7 +1,7 @@
 const express = require('express');
 const JSONParser = require('body-parser');
 const mysql = require('mysql');
-//const fs = require('fs');
+const fs = require('fs');
 const app = express();
 
 const mysqlConnectionString = "mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh";
@@ -290,16 +290,23 @@ app.post('/insertQuestion', (req, res1) => {
 		}
 	});
 	
-	connection.query("select * from history", function(err, result){
-		if (err){
-			throw err;
-		}
-		console.log(result);
-	});
+	//connection.query("select * from history", function(err, result){
+	//	if (err){
+	//		throw err;
+	//	}
+	//	console.log(result);
+	//});
 	
 	connection.end();
 	
 	res1.status(200).send();
+});
+
+app.post('/suggestedQuestions', (req, res1) => {
+	var jsonData = fs.readFileSync('suggestedQuestions.json');
+	var categorizedQuestions = JSON.parse(jsonData);
+	
+	res1.status(200).send(JSON.stringify(categorizedQuestions, null, 2));
 });
 
 /*app.post('/uploadDocument', (req, res1) => {

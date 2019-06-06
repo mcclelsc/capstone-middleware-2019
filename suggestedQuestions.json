@@ -1,0 +1,11 @@
+{
+	"questions":[
+		"Direction of train travel?",
+		"Speed of train?",
+		"Rail subdivision?",
+		"Were dangerous goods involved?",
+		"How many cars with dangerous goods were involved?",
+		"What kind of mechanical inspection before departure?",
+		"What kind of tests were performed before departure?"
+	]
+}
