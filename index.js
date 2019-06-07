@@ -219,7 +219,7 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 							}
 						}
 					}
-					else if (queryResponse.results[i].highlight.hasOwnProperty("answer")){
+					if (queryResponse.results[i].highlight.hasOwnProperty("answer")){
 						for (j = 0; j < queryResponse.results[i].highlight.answer.length; j++){
 							stringToInspect = queryResponse.results[i].highlight.answer[j].split("</em>");
 							for (k = 0; k < stringToInspect.length; k++){
