@@ -304,20 +304,20 @@ app.post('/insertQuestion', (req, res1) => {
 
 app.get('/selectChatHistory', (req, res1) => {
 	var connection = mysql.createConnection(mysqlConnectionString);
-	var resultString = "";
 	connection.connect();
 	
 	connection.query("select * from history", function(err, result){
 		if (err){
 			throw err;
 		}
-		resultString = result;
+		//resultString = result;
+		//res1.set('Context-Type', 'text/html')
+		res1.send(result);
 		console.log(result);
 	});
 	
 	connection.end();
 	
-	res1.send(resultString);
 });
 
 app.post('/suggestedQuestions', (req, res1) => {
