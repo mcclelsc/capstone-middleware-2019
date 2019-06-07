@@ -317,7 +317,7 @@ app.get('/selectChatHistory', (req, res1) => {
 	
 	connection.end();
 	
-	res1.status(200).send(resultString);
+	res1.send(resultString);
 });
 
 app.post('/suggestedQuestions', (req, res1) => {
