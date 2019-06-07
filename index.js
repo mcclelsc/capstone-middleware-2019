@@ -302,6 +302,24 @@ app.post('/insertQuestion', (req, res1) => {
 	res1.status(200).send();
 });
 
+app.get('/selectChatHistory', (req, res1) => {
+	var connection = mysql.createConnection(mysqlConnectionString);
+	var resultString = "";
+	connection.connect();
+	
+	connection.query("select * from history", function(err, result){
+		if (err){
+			throw err;
+		}
+		resultString = result;
+		console.log(result);
+	});
+	
+	connection.end();
+	
+	res1.status(200).send(resultString);
+});
+
 app.post('/suggestedQuestions', (req, res1) => {
 	var jsonData = fs.readFileSync('suggestedQuestions.json');
 	var categorizedQuestions = JSON.parse(jsonData);
