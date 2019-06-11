@@ -309,8 +309,9 @@ app.get('/selectChatHistory', (req, res1) => {
 		
 		
 		
-		res1.send(result[0]);
-		//console.log(result);
+		res1.writeHead(200, {'Content-Type': 'text/html'});
+		res1.write(result);
+		res1.end();
 	});
 	
 	connection.end();
