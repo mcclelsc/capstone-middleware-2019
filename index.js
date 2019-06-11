@@ -309,7 +309,7 @@ app.get('/selectChatHistory', (req, res1) => {
 		
 		
 		
-		res1.send(result[i]);
+		res1.send(result[0]);
 		//console.log(result);
 	});
 	
