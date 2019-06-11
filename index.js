@@ -4,16 +4,19 @@ const mysql = require('mysql');
 const fs = require('fs');
 const app = express();
 
-const mysqlConnectionString = "mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh";
+var configData = fs.readFileSync('config.json');
+var configJSON = JSON.parse(configData);
 
-const discoveryURL = "https://gateway.watsonplatform.net/discovery/api";
-const discoveryAPI = "VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX";
-const discoveryEnvironmentID = "a81bea55-c449-4499-8c7b-4cd3358ea94d";
-const discoveryCollectionID = "89949583-2061-48d0-ade2-289ed65a499a";
+const mysqlConnectionString = configJSON.mysqlConnectionString;
 
-const assistantURL = "https://gateway.watsonplatform.net/assistant/api";
-const assistantAPI = "jP5yGzV5NNzsfS7NG5xmDg96b9Dj6_t0kug5Kg6nEQUM";
-const assistantID = "387f67bb-7fbb-4ca5-a175-88e4dbdc17e5";
+const discoveryURL = configJSON.discoveryURL;
+const discoveryAPI = configJSON.discoveryAPI;
+const discoveryEnvironmentID = configJSON.discoveryEnvironmentID;
+const discoveryCollectionID = configJSON.discoveryCollectionID;
+
+const assistantURL = configJSON.assistantURL;
+const assistantAPI = configJSON.assistantAPI;
+const assistantID = configJSON.assistantID;
 
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
@@ -102,7 +105,6 @@ app.post('/startConversation', (req, res1) => {
 });
 
 app.post('/continueConversation', (req, res1) => {
-	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var chatText = "";
 	var chatObject = "";
@@ -141,13 +143,10 @@ app.post('/continueConversation', (req, res1) => {
 		.catch(err => {
 			console.log(err);
 		});
-		//res.status(200);
-		//res.send(chatObject.output.generic[0].text+"");
 		
 });
 
 app.post('/getDocumentId', (req, res1) => {
-	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var reponse;
 
@@ -159,7 +158,6 @@ app.post('/getDocumentId', (req, res1) => {
 
 	discovery.query(queryParams)
 	  .then(queryResponse => {
-		  //queryResponse.results[0].extracted_metadata.filename == insertModuleJSON.filename
 		  if (queryResponse.results[0]){
 			  for (i = 0; i < queryResponse.results.length; i++){
 				  if (JSON.stringify(queryResponse.results[i].extracted_metadata.filename) == JSON.stringify(insertModuleJSON.filename)){
@@ -179,7 +177,6 @@ app.post('/getDocumentId', (req, res1) => {
 });
 
 app.post('/specificDiscoveryQuery', (req, res1) => {
-	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 	var specificQueryPackage = [];
 	var highlightedTerms = [];
@@ -256,7 +253,6 @@ app.post('/specificDiscoveryQuery', (req, res1) => {
 });
 
 app.post('/generalDiscoveryQuery', (req, res1) => {
-	//Unpack payload's body into workable object
 	var insertModuleJSON = JSON.parse(Object.keys(req.body)[0]);
 
 	var queryParams = {
@@ -310,10 +306,11 @@ app.get('/selectChatHistory', (req, res1) => {
 		if (err){
 			throw err;
 		}
-		//resultString = result;
-		//res1.set('Context-Type', 'text/html')
-		res1.send(result);
-		console.log(result);
+		
+		
+		
+		res1.send(result.get(0));
+		//console.log(result);
 	});
 	
 	connection.end();

@@ -1,0 +1,10 @@
+{
+	"mysqlConnectionString":"mysql://x9ll9bau5p4f9gt7:dem4enbecbkrvri5@lmag6s0zwmcswp5w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/t552aveoqrp2w1qh",
+	"discoveryURL":"https://gateway.watsonplatform.net/discovery/api",
+	"discoveryAPI":"VItRjA_lLWhIou2a31mvKTsAtoXZFXvK6q3XuM6t5SzX",
+	"discoveryEnvironmentID":"a81bea55-c449-4499-8c7b-4cd3358ea94d",
+	"discoveryCollectionID":"89949583-2061-48d0-ade2-289ed65a499a",
+	"assistantURL":"https://gateway.watsonplatform.net/assistant/api",
+	"assistantAPI":"jP5yGzV5NNzsfS7NG5xmDg96b9Dj6_t0kug5Kg6nEQUM",
+	"assistantID":"387f67bb-7fbb-4ca5-a175-88e4dbdc17e5"
+}
