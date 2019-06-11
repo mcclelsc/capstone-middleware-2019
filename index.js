@@ -308,12 +308,16 @@ app.get('/selectChatHistory', (req, res1) => {
 		}
 		
 		var stringResponse = "";
+		var tempAnswerString = "";
 		
 		for (i = 0; i < result.length; i++){
+			tempAnswerString = result[i].answer;
+			tempAnswerString = tempAnswerString.replace(/<span>/g,'<b>');
+			tempAnswerString = tempAnswerString.replace(/<\/span>/g,'</b>');
 			stringResponse += "<div>";
 			stringResponse += "<p><strong>Row ID:</strong> " + result[i].id + "</p>";
 			stringResponse += "<p><strong>Question:</strong> " + result[i].question + "</p>";
-			stringResponse += "<p><strong>Answer:</strong> " + result[i].answer + "</p>";
+			stringResponse += "<p><strong>Answer:</strong> " + tempAnswerString + "</p>";
 			stringResponse += "<p><strong>Report Filename:</strong> " + result[i].reportname + "</p>";
 			stringResponse += "<p><strong>DateTime:</strong> " + result[i].occurencetime + "</p>";
 			stringResponse += "</div><br>";
