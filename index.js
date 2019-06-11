@@ -307,10 +307,20 @@ app.get('/selectChatHistory', (req, res1) => {
 			throw err;
 		}
 		
+		var stringResponse = "";
 		
+		for (i = 0; i < result.length; i++){
+			stringResponse += "<div>";
+			stringResponse += "<p><strong>Row ID:</strong> " + result[i].id + "</p>";
+			stringResponse += "<p><strong>Question:</strong> " + result[i].question + "</p>";
+			stringResponse += "<p><strong>Answer:</strong> " + result[i].answer + "</p>";
+			stringResponse += "<p><strong>Report Filename:</strong> " + result[i].reportname + "</p>";
+			stringResponse += "<p><strong>DateTime:</strong> " + result[i].occurencetime + "</p>";
+			stringResponse += "</div><br>";
+		}
 		
 		res1.writeHead(200, {'Content-Type': 'text/html'});
-		res1.write(result);
+		res1.write(stringResponse);
 		res1.end();
 	});
 	
