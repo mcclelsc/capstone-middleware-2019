@@ -34,8 +34,6 @@ const discovery = new DiscoveryV1({
 	url: discoveryURL
 });
 
-var sessionId = "";
-
 app.use(JSONParser.urlencoded({limit: '50mb', extended:true}));
 
 app.get('/', (req, res) => {
@@ -79,7 +77,7 @@ app.post('/startConversation', (req, res1) => {
 	assistant.createSession({
 		assistant_id: assistantID
 	}).then(res => {
-		sessionId = res.session_id;
+		var sessionId = res.session_id;
 		
 		assistant.message({
 		assistant_id: assistantID,
@@ -92,7 +90,7 @@ app.post('/startConversation', (req, res1) => {
 		.then(res => {
 			chatText = JSON.stringify(res, null, 2);
 			chatObject = JSON.parse(chatText);
-			chatText = chatObject.output.generic[0].text + "";
+			chatText = chatObject.output.generic[0].text + ";uniqueDelimiter;" + sessionId;
 			res1.status(200).send(chatText);
 		})
 		.catch(err => {
@@ -110,7 +108,7 @@ app.post('/continueConversation', (req, res1) => {
 	var chatObject = "";
 	assistant.message({
 		assistant_id: assistantID,
-		session_id: sessionId,
+		session_id: insertModuleJSON.sessionId,
 			input: {
 				'message_type': 'text',
 				'text': insertModuleJSON.message
